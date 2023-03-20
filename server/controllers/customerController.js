@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
  */
 exports.home = async(req, res) => {
 
-        res.redirect('/s')
+        res.redirect('https://abqlogistics.netlify.app/')
 
     },
     exports.homepage = async(req, res) => {
