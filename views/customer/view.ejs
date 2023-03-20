@@ -1,0 +1,167 @@
+<style>
+    body {
+        padding: 40px;
+        max-width: 700px;
+        margin: 0px auto;
+        background: #eeeeee;
+    }
+</style>
+<div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <%= customer.firstName  %>
+            <%= customer.lastName  %>
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md 0">
+        <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+        </div>
+    </div>
+</div>
+
+<div class="col py-3">
+
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                    <li class="breadcrumb-item active">
+                        <%= customer.firstName  %>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col text-end fw-lighter">
+            <b>Last Updated <%= new Date(customer.updatedAt).toUTCString() %> </b>
+            <b>UserId:</b>
+            <%= customer._id %>
+        </div>
+    </div>
+
+</div>
+
+<ul class="list-group">
+
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col" style="max-width: 140px"> <b>Tracking Number:</b></div>
+            <div class="col">
+                <%= customer._id %>
+            </div>
+        </div>
+    </li>
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col" style="max-width: 140px"> <b>Name:</b></div>
+            <div class="col">
+                <%= customer.firstName %>
+                    <%= customer.lastName %>
+            </div>
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col" style="max-width: 140px"> <b>Tel:</b></div>
+            <div class="col">
+                <%= customer.tel %>
+            </div>
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col" style="max-width: 140px"> <b>Email:</b></div>
+            <div class="col">
+                <%= customer.email %>
+            </div>
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col" style="max-width: 140px"> <b>Details:</b></div>
+            <div class="col">
+                <%= customer.details %>
+            </div>
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col" style="max-width: 140px"> <b>Date Created:</b></div>
+            <div class="col">
+                <%= customer.createdAt %>
+            </div>
+        </div>
+    </li>
+
+    <li class="list-group-item">
+        <div class="row">
+            <div class="col" style="max-width: 140px"> <b>Date Modified:</b></div>
+            <div class="col">
+                <%= customer.updatedAt %>
+            </div>
+        </div>
+    </li>
+
+</ul>
+
+
+<% for( let t of customer.trackings ){ %>
+
+
+    <ul class="list-group">
+
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col" style="max-width: 140px"> <b>Location:</b></div>
+                <div class="col">
+                    <%=t.location %> --
+                        <a href="/tracking/delete/<%= t._id %>">Delete</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <%
+                    }
+%>
+        <br>
+        <hr>
+        <br>
+        <form action="/tracking/<%= customer._id %>?_method=PUT" method="POST" style="max-width: 600px; margin: 0px auto">
+
+            <div class="row form-group mb-4">
+                <input type="hidden" class="form-control" id="firstName" name="owner" value="<%= customer._id %>" placeholder="First Name" required>
+                <div class="col">
+                    <label for="lastName">location</label>
+                    <input type="text" class="form-control" id="lastName" name="location" value="" placeholder="location" required>
+                </div>
+            </div>
+
+            <div class="row form-group mb-4">
+                <div class="col">
+                    <label for="tel">arrival date & time</label>
+                    <input type="datetime-local" class="form-control" id="tel" name="arrival_time" value="" placeholder="arrival_time" required>
+                </div>
+
+                <div class="col">
+                    <label for="status">Status</label>
+                    <input type="text" class="form-control" id="email" name="status" value="In Transit" placeholder="status" required>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="details">Additional info (Optional)</label>
+                <textarea class="form-control" name="info" id="details" cols="30" rows="12" placeholder=""></textarea>
+            </div>
+
+            <div class="form-group mb-4">
+                <button type="submit" class="btn btn-primary">Update Client</button>
+
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" id="deleteButton" data-bs-target="#deleteModal">Delete Client</button>
+
+            </div>
+
+        </form>
